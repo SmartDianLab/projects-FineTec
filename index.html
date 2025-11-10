@@ -1,0 +1,176 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>FineTec</title>
+<link href="./FineTec/style.css" rel="stylesheet">
+<script type="text/javascript" src="./FinePhys_files/jquery.mlens-1.0.min.js"></script> 
+<script type="text/javascript" src="./FinePhys_files/jquery.js"></script>
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
+    }
+  };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+  <div class="content">
+    <h1><b>FineTec: Fine-Grained Action Recognition under Temporal Corruption via Skeleton Decomposition and Sequence Completion</b></h1>
+    <p id="authors" class="serif">
+      <span style="font-size: 1.0em">
+        Dian Shao<sup>&dagger;</sup>, Mingfei Shi, Shengda Xu, Haodong Chen, Yongle Huang, Binglu Wang
+      </span>
+      <br>
+      <a style="font-size: 1em"><sup>&dagger;</sup>Corresponding Author.</a>
+      <br>
+      <span style="font-size: 0.9em; margin-top: 0.6em">
+        Northwestern Polytechnical University
+      </span>
+    </p>
+  
+    <font size="+1">
+      <p style="text-align: center;" class="sansserif">
+        <!-- <a href="https://arxiv.org/abs/2404.02101" target="" style="font-weight: bold;">[arXiv Report]</a>&nbsp;&nbsp;&nbsp;&nbsp; -->
+        <a href="https://github.com/SmartDianLab/FineTec" target="" style="font-weight: bold;">[Code]</a>&nbsp;&nbsp;&nbsp;&nbsp;
+        <!-- <a href="#bibtex" style="font-weight: bold;">[BibTeX]</a>&nbsp;&nbsp;&nbsp;&nbsp; -->
+        <!-- <a href="https://huggingface.co/spaces/hehao13/CameraCtrl-svd" style="font-weight: bold;">[HF Demo]</a> -->
+      </p><br>
+    </font>
+  
+    <div style="text-align:center;">
+      <img src="./FineTec/fig1.jpg" width="100%" alt="teaser_figure">
+    </div>
+    <!-- <div style="text-align:center; margin-bottom:1em;">
+      <video class="clickplay" width="80%" controls autoplay muted loop>
+        <source src="./finephys/Demo_FinePhys.mp4" type="video/mp4">
+      </video>
+    </div> -->
+    <!-- <div style="text-align:center; margin-bottom:1em;">
+      <img src="./finephys/demo_video.gif" width="100%" alt="Demo GIF">
+    </div> -->
+  </div>
+  
+  
+<!-- <div class="content">
+  <p style="text-align:center; font-size: 2em; font-weight: bold" class="sansserif">Abstract</p>
+  <p style="font-size: 1.2em; margin-left:5em; margin-right:5em;" class="serif"> Although remarkable progress has been achieved in video generation, synthesizing physically plausible human actions remains an unresolved challenge, especially when addressing fine-grained semantics and complex temporal dynamics. For instance, generating gymnastics routines such as \textit{“two turns on one leg with the free leg optionally below horizontal”} poses substantial difficulties for current video generation methods, which often fail to produce satisfactory results. To address this, we propose \textbf{FinePhys}, a \textbf{Fine}-grained human action generation framework incorporating \textbf{Phys}ics for effective skeletal guidance. Specifically, FinePhys first performs online 2D pose estimation and then accomplishes dimension lifting through in-context learning. Recognizing that such data-driven 3D pose estimations may lack stability and interpretability, we incorporate a physics-based module that re-estimates motion dynamics using Euler-Lagrange equations, calculating joint accelerations bidirectionally across the temporal dimension. The physically predicted 3D poses are then fused with data-driven poses to provide multi-scale 2D heatmap-based guidance for the video generation process. Evaluated on three fine-grained action subsets from FineGym (FX-JUMP, FX-TURN, and FX-SALTO), FinePhys significantly outperforms competitive baselines. Comprehensive qualitative results further demonstrate FinePhys's ability to generate more natural and plausible fine-grained human actions.
+  </div> -->
+<div class="content">
+    <p style="text-align:center; font-size: 2em; font-weight: bold" class="sansserif">Abstract</p>
+    <p style="font-size: 1.2em; margin-left:5em; margin-right:5em;" class="serif">
+      Recognizing fine-grained actions from temporally corrupted skeleton sequences remains a significant challenge, particularly in real-world scenarios where online pose estimation often yields substantial missing data. 
+      Existing methods often struggle to accurately recover temporal dynamics and fine-grained spatial structures, resulting in the loss of subtle motion cues crucial for distinguishing similar actions. 
+      To address this, we propose <em><strong>FineTec</strong></em>, a unified framework for <em><strong>Fine</strong></em>-grained action recognition under <em><strong>Te</strong></em>mporal <em><strong>C</strong></em>orruption.
+      FineTec first restores a base skeleton sequence from corrupted input using context-aware completion with diverse temporal masking. 
+      Next, a skeleton-based spatial decomposition module partitions the skeleton into five semantic regions, further divides them into dynamic and static subgroups based on motion variance, and generates two augmented skeleton sequences via targeted perturbation. 
+      These, along with the base sequence, are then processed by a physics-driven estimation module, which utilizes Lagrangian dynamics to estimate joint accelerations. 
+      Finally, both the fused skeleton position sequence and the fused acceleration sequence are jointly fed into a GCN-based action recognition head. 
+      Extensive experiments on both coarse-grained (NTU-60, NTU-120) and fine-grained (Gym99, Gym288) benchmarks show that FineTec significantly outperforms previous methods under various levels of temporal corruption. 
+      Specifically, FineTec achieves top-1 accuracies of 89.1% and 78.1% on the challenging Gym99-severe and Gym288-severe settings, respectively, demonstrating its robustness and generalizability.
+    </p>
+  </div>
+
+<div class="content">
+  <p style="text-align:center; font-size: 2em; font-weight: bold" class="sansserif">Demo Video</p>
+  <div style="text-align:center; margin-bottom:1em;">
+    <video class="clickplay" width="80%" controls>
+      <source src="./FineTec/FineTec_demo.mp4" type="video/mp4">
+    </video>
+  </div>
+</div>
+
+<!-- <div class="content">
+  <p style="text-align:center; font-size: 2em; font-weight: bold" class="sansserif">Framework</p> <br>
+  <img src="./finephys/architecture.png" style="width:90%;" alt="architecture_figure" class="summary-img"> <br>
+  <p style="font-size: 1.2em; margin-left:5em; margin-right:5em;" class="serif"> 
+    <strong>Overview of Finephys.</strong>
+    FinePhys addresses the challenging task of generating fine-grained human action videos by explicitly incorporating physical equations exploiting pose modality.
+    The pipeline begins with online extracting 2D poses, then transforms them into 3D using an in-context learning module, achieving the data-driven 3D skeleton sequence $S^{3D}_{dd}$.  
+    To incorporate the physical laws of motion, we introduce a Phys-Net module to re-estimate the 3D positions of each human joint by accounting for second-order temporal variations (<em>i.e.</em>, accelerations) in both forward and reverse directions, yielding physically predicted 3D poses$S^{3D}_{pp}$.
+    Subsequently, $S^{3D}_{dd}$ and $S^{3D}_{pp}$ are fused, projected back into 2D space, encoded into multi-scale latent maps, and integrated into 3D-UNets to guide the denoising process.
+  </p>
+</div> -->
+<div class="content">
+  <p style="text-align:center; font-size: 2em; font-weight: bold" class="sansserif">Framework</p> <br>
+  <img src="./FineTec/arch.jpg" style="width:90%;" alt="architecture_figure" class="summary-img"> <br>
+  <p style="font-size: 1.2em; margin-left:5em; margin-right:5em;" class="serif"> 
+    <strong>Overview of FineTec.</strong>
+    FineTec consists of three core modules:
+    ① Context-aware Sequence Completion restores missing or corrupted skeleton frames using in-context learning, producing $S_{base}$; 
+    ② Skeleton-based Spatial Decomposition partitions $S_{base}$ into anatomical regions by motion intensity, generating dynamic ($S_{dyna}$) and static ($S_{stat}$) variants, which are fused into $S_{pred}$; 
+    ③ Physics-driven Acceleration Modeling infers joint accelerations via Lagrangian dynamics and data-driven finite differences, producing fused temporal dynamics features $\mathbf{a}$. 
+    The resulting positional ($S_{pred}$) and dynamic ($\mathbf{a}_{pred}$) features are used for downstream fine-grained action recognition.
+  </p>
+</div>
+<!-- <div class="content">
+  <p style="text-align:center; font-size: 2em; font-weight: bold" class="sansserif">Visualization Results</p> <br>
+  <p style="font-size: 1.3em" class="serif"> <code>CameraCtrl</code> for general text-to-video generation</p> <br>
+  <div style="text-align:center; margin-bottom:1em;">
+    <video class="clickplay" width="90%" controls>
+      <source src="./CameraCtrl_files/generat_t2v_object.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div style="text-align:center; margin-bottom:1em;">
+    <video class="clickplay" width="90%" controls>
+      <source src="./CameraCtrl_files/general_t2v_scene.mp4" type="video/mp4">
+    </video>
+  </div> <br>
+  <p style="font-size: 1.3em" class="serif"> Same text prompt + Different camera trajectories</p>
+  <div style="text-align:center; margin-bottom:1em;">
+    <video class="clickplay" width="90%" controls>
+      <source src="./CameraCtrl_files/different_traj_same_prompt.mp4" type="video/mp4">
+    </video>
+  </div> <br>
+  <p style="font-size: 1.3em" class="serif"> <code>CameraCtrl</code> for personalized text-to-video generation</p> <br>
+  <div style="text-align:center; margin-bottom:1em;">
+    <video class="clickplay" width="90%" controls>
+      <source src="./CameraCtrl_files/realistic_vision.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div style="text-align:center; margin-bottom:1em;">
+    <video class="clickplay" width="90%" controls>
+      <source src="./CameraCtrl_files/toonyou.mp4" type="video/mp4">
+    </video>
+  </div> <br>
+  <p style="font-size: 1.3em" class="serif"> <code>CameraCtrl</code> for image-to-video generation</p>
+  <div style="text-align:center; margin-bottom:1em;">
+    <video class="clickplay" width="90%" controls>
+      <source src="./CameraCtrl_files/i2v_object.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div style="text-align:center; margin-bottom:1em;">
+    <video class="clickplay" width="90%" controls>
+      <source src="./CameraCtrl_files/i2v_scene.mp4" type="video/mp4">
+    </video>
+  </div> <br>
+  <p style="font-size: 1.3em" class="serif"> Integration <code>CameraCtrl</code> with other video control methods</p> <br>
+  <div style="text-align:center; margin-bottom:1em;">
+    <video class="clickplay" width="96%" controls>
+      <source src="./CameraCtrl_files/integrate_with_others.mp4" type="video/mp4">
+    </video>
+  </div> <br>
+</div>
+
+<div class="content" id="bibtex">
+  <p style="text-align:left; font-size: 2em; font-weight: bold" class="serif">BibTeX</p>
+  <code>
+  @misc{he2024cameractrl,<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;title={CameraCtrl: Enabling Camera Control for Text-to-Video Generation},<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;author={Hao He and Yinghao Xu and Yuwei Guo and Gordon Wetzstein and Bo Dai and Hongsheng Li and Ceyuan Yang},<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;year={2024},<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;eprint={2404.02101},<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;archivePrefix={arXiv},<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;primaryClass={cs.CV}<br>
+  }
+  </code>
+</div> -->
+
+<div class="content">
+  <p class="serif">
+    We borrow the source code of this project page from  <a href="https://smartdianlab.github.io/projects-FinePhys/">FinePhys</a>.
+  </p>
+</div>
+</body>
+</html>
