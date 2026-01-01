@@ -15,6 +15,71 @@
   };
 </script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+  /* Image modal styles */
+  .image-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    overflow: auto;
+  }
+  .image-modal-content {
+    margin: auto;
+    display: block;
+    max-width: 95%;
+    max-height: 95%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .image-modal-close {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 10000;
+  }
+  .image-modal-close:hover,
+  .image-modal-close:focus {
+    color: #bbb;
+  }
+</style>
+<script>
+  function showFullImage(src) {
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImage');
+    modal.style.display = 'block';
+    modalImg.src = src;
+  }
+  
+  function closeImageModal() {
+    document.getElementById('imageModal').style.display = 'none';
+  }
+  
+  // Close modal when clicking outside the image
+  window.onclick = function(event) {
+    const modal = document.getElementById('imageModal');
+    if (event.target == modal) {
+      closeImageModal();
+    }
+  }
+  
+  // Close modal with ESC key
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+      closeImageModal();
+    }
+  });
+</script>
 </head>
 
 <body>
@@ -24,8 +89,11 @@
       <h2 class="header-title">FineTec</h2>
       <nav class="header-nav">
         <a href="#abstract">Abstract</a>
-        <a href="#framework">Framework</a>
+        <a href="#method">Method</a>
+        <a href="#results">Results</a>
         <a href="#video">Demo</a>
+        <a href="#dataset">Dataset</a>
+        <a href="#bibtex">Citation</a>
         <a href="#contact">Contact</a>
       </nav>
     </div>
@@ -57,7 +125,7 @@
       <a href="https://arxiv.org/abs/2512.25067" target="_blank" class="link-button">📝 arXiv</a>
       <a href="https://github.com/SmartDianLab/FineTec" target="_blank" class="link-button">💻 Code</a>
       <a href="https://huggingface.co/datasets/Lozumi/Gym288-skeleton" target="_blank" class="link-button">💾 Dataset</a>
-      <!-- <a href="#bibtex" class="link-button">📋 BibTeX <span style="font-size: 0.85em;">(Coming soon)</span></a> -->
+      <a href="#bibtex" class="link-button">📋 BibTeX</a>
     </p>
     <p style="text-align: center; margin-top: 10px; font-size: 0.9em; color: #666;">
       <em>Note: Supplementary materials are available in the arXiv version.</em>
@@ -68,38 +136,65 @@
     </div> -->
   </div>
   
-  
 <!-- <div class="content">
   <p style="text-align:center; font-size: 2em; font-weight: bold" class="sansserif">Abstract</p>
   <p style="font-size: 1.2em; margin-left:5em; margin-right:5em;" class="serif"> Although remarkable progress has been achieved in video generation, synthesizing physically plausible human actions remains an unresolved challenge, especially when addressing fine-grained semantics and complex temporal dynamics. For instance, generating gymnastics routines such as \textit{“two turns on one leg with the free leg optionally below horizontal”} poses substantial difficulties for current video generation methods, which often fail to produce satisfactory results. To address this, we propose \textbf{FinePhys}, a \textbf{Fine}-grained human action generation framework incorporating \textbf{Phys}ics for effective skeletal guidance. Specifically, FinePhys first performs online 2D pose estimation and then accomplishes dimension lifting through in-context learning. Recognizing that such data-driven 3D pose estimations may lack stability and interpretability, we incorporate a physics-based module that re-estimates motion dynamics using Euler-Lagrange equations, calculating joint accelerations bidirectionally across the temporal dimension. The physically predicted 3D poses are then fused with data-driven poses to provide multi-scale 2D heatmap-based guidance for the video generation process. Evaluated on three fine-grained action subsets from FineGym (FX-JUMP, FX-TURN, and FX-SALTO), FinePhys significantly outperforms competitive baselines. Comprehensive qualitative results further demonstrate FinePhys's ability to generate more natural and plausible fine-grained human actions.
   </div> -->
 <div class="content" id="abstract">
     <p class="section-title">Abstract</p>
-    <p class="abstract-text">
-      Recognizing fine-grained actions from temporally corrupted skeleton sequences remains a significant challenge, particularly in real-world scenarios where online pose estimation often yields substantial missing data. 
-      Existing methods often struggle to accurately recover temporal dynamics and fine-grained spatial structures, resulting in the loss of subtle motion cues crucial for distinguishing similar actions. 
-      To address this, we propose <em><strong>FineTec</strong></em>, a unified framework for <em><strong>Fine</strong></em>-grained action recognition under <em><strong>Te</strong></em>mporal <em><strong>C</strong></em>orruption.
-      FineTec first restores a base skeleton sequence from corrupted input using context-aware completion with diverse temporal masking. 
-      Next, a skeleton-based spatial decomposition module partitions the skeleton into five semantic regions, further divides them into dynamic and static subgroups based on motion variance, and generates two augmented skeleton sequences via targeted perturbation. 
-      These, along with the base sequence, are then processed by a physics-driven estimation module, which utilizes Lagrangian dynamics to estimate joint accelerations. 
-      Finally, both the fused skeleton position sequence and the fused acceleration sequence are jointly fed into a GCN-based action recognition head. 
-      Extensive experiments on both coarse-grained (NTU-60, NTU-120) and fine-grained (Gym99, Gym288) benchmarks show that FineTec significantly outperforms previous methods under various levels of temporal corruption. 
-      Specifically, FineTec achieves top-1 accuracies of <strong>89.1%</strong> and <strong>78.1%</strong> on the challenging Gym99-severe and Gym288-severe settings, respectively, demonstrating its robustness and generalizability.
-    </p>
+    <div style="display: flex; gap: 2em; align-items: flex-start; margin-top: 1.5em;">
+      <div style="flex: 0 0 22%; min-width: 220px;">
+        <img src="./assets/poster.jpg" style="width: 100%; box-shadow: 0 4px 8px rgba(0,0,0,0.15); border-radius: 8px; cursor: pointer;" alt="FineTec Poster" onclick="showFullImage(this.src)">
+        <p style="text-align: center; margin-top: 0.8em; font-size: 0.95em; color: #224b8d; font-weight: 600;">Poster</p>
+        <p style="text-align: center; margin-top: 0.5em;">
+          <a href="javascript:void(0)" onclick="showFullImage('./assets/poster.jpg')" class="link-button" style="font-size: 0.85em; padding: 0.4em 0.8em;">🔍 View Full Size</a>
+        </p>
+      </div>
+      <div style="flex: 1;">
+        <p class="abstract-text" style="margin-top: 0;">
+          Recognizing fine-grained actions from temporally corrupted skeleton sequences remains a significant challenge, particularly in real-world scenarios where online pose estimation often yields substantial missing data. 
+          Existing methods often struggle to accurately recover temporal dynamics and fine-grained spatial structures, resulting in the loss of subtle motion cues crucial for distinguishing similar actions. 
+          To address this, we propose <em><strong>FineTec</strong></em>, a unified framework for <em><strong>Fine</strong></em>-grained action recognition under <em><strong>Te</strong></em>mporal <em><strong>C</strong></em>orruption.
+          FineTec first restores a base skeleton sequence from corrupted input using context-aware completion with diverse temporal masking. 
+          Next, a skeleton-based spatial decomposition module partitions the skeleton into five semantic regions, further divides them into dynamic and static subgroups based on motion variance, and generates two augmented skeleton sequences via targeted perturbation. 
+          These, along with the base sequence, are then processed by a physics-driven estimation module, which utilizes Lagrangian dynamics to estimate joint accelerations. 
+          Finally, both the fused skeleton position sequence and the fused acceleration sequence are jointly fed into a GCN-based action recognition head. 
+          Extensive experiments on both coarse-grained (NTU-60, NTU-120) and fine-grained (Gym99, Gym288) benchmarks show that FineTec significantly outperforms previous methods under various levels of temporal corruption. 
+          Specifically, FineTec achieves top-1 accuracies of <strong>89.1%</strong> and <strong>78.1%</strong> on the challenging Gym99-severe and Gym288-severe settings, respectively, demonstrating its robustness and generalizability.
+        </p>
+      </div>
+    </div>
   </div>
 
-<div class="content" id="framework">
-  <p class="section-title">Framework</p>
+<div class="content" id="method">
+  <p class="section-title">Method</p>
   <div class="framework-image">
-    <img src="./assets/fig2.png" alt="FineTec Architecture"> 
+    <img src="./assets/fig2_framework.png" alt="FineTec Architecture"> 
   </div>
   <p class="framework-text"> 
-    <strong>Overview of FineTec.</strong>
     FineTec consists of three core modules:
     <strong>①</strong> Context-aware Sequence Completion restores missing or corrupted skeleton frames using in-context learning, producing $S_{base}$; 
     <strong>②</strong> Skeleton-based Spatial Decomposition partitions $S_{base}$ into anatomical regions by motion intensity, generating dynamic ($S_{dyna}$) and static ($S_{stat}$) variants, which are fused into $S_{pred}$; 
     <strong>③</strong> Physics-driven Acceleration Modeling infers joint accelerations via Lagrangian dynamics and data-driven finite differences, producing fused temporal dynamics features $\mathbf{a}$. 
     The resulting positional ($S_{pred}$) and dynamic ($\mathbf{a}_{pred}$) features are used for downstream fine-grained action recognition.
+    For more details, please refer to our <a href="https://arxiv.org/abs/2512.25067" target="_blank" style="color: #224b8d; text-decoration: none; border-bottom: 1px solid #224b8d;">paper</a>.
+  </p>
+</div>
+
+<div class="content" id="results">
+  <p class="section-title">Results</p>
+  <div style="text-align: center; margin: 2em 0;">
+    <img src="./assets/tab1_results_on_finegym.png" style="width: 90%; max-width: 1200px;" alt="FineTec Results">
+  </div>
+  <p class="framework-text">
+    <strong>Results on Fine-grained Action Recognition.</strong>
+    The main quantitative results on the two fine-grained skeleton datasets, Gym99 and Gym288-skeleton, are presented in the table above.
+    These results are reported across three difficulty levels: minor (25% frame missing), moderate (50% frame missing), and severe (75% frame missing). 
+    It can be observed that the proposed FineTec framework consistently achieves the best performance under all conditions. 
+    Notably, in the most challenging scenario—Gym288-skeleton with severe frame missing—FineTec attains a Top-1 accuracy of <strong>78.1%</strong>, surpassing all previous skeleton-based methods. 
+    In terms of mean class accuracy, FineTec improves upon the best baseline by <strong>13%</strong>, and outperforms the latest work by <strong>50%</strong>. 
+    Overall, these results demonstrate that FineTec achieves outstanding effectiveness across fine-grained datasets and under all levels of difficulty.
+    For additional results and ablation studies, please refer to our <a href="https://arxiv.org/abs/2512.25067" target="_blank" style="color: #224b8d; text-decoration: none; border-bottom: 1px solid #224b8d;">paper</a>.
   </p>
 </div>
 
@@ -113,6 +208,195 @@
   </div>
 </div>
 
+<div class="content" id="dataset">
+  <p class="section-title">Dataset</p>
+  
+  <h3 style="font-size: 1.3em; margin-top: 1.5em; margin-bottom: 0.8em; color: #224b8d;">Overview</h3>
+  
+  <p class="framework-text">
+    The <strong>Gym288-skeleton</strong> dataset is a human skeleton-based action recognition benchmark derived from the <strong>Gym288</strong> subset of the 
+    <a href="https://sdolivia.github.io/FineGym/" target="_blank" style="color: #224b8d; text-decoration: none; border-bottom: 1px solid #224b8d;">FineGym</a> dataset. 
+    It provides temporally precise, fine-grained annotations of gymnastic actions along with 2D human pose sequences extracted from original video frames.
+  </p>
+
+  <p class="framework-text">
+    This dataset is designed to support research in:
+  </p>
+  <ul style="font-size: 1.15em; line-height: 1.8; margin: 0.5em 3em 1.5em 3em; text-align: left;">
+    <li>Fine-grained action recognition</li>
+    <li>Temporally corrupted or incomplete action modeling</li>
+    <li>Skeleton-based representation learning</li>
+    <li>Physics-aware motion understanding</li>
+  </ul>
+
+  <h3 style="font-size: 1.3em; margin-top: 1.5em; margin-bottom: 0.8em; color: #224b8d;">Key Statistics</h3>
+  <ul style="font-size: 1.15em; line-height: 1.8; margin: 1em 3em; text-align: left;">
+    <li><strong>Total instances:</strong> 38,223 action sequences</li>
+    <li><strong>Action classes:</strong> 288 fine-grained gymnastic elements</li>
+    <li><strong>Training samples:</strong> 28,739</li>
+    <li><strong>Test samples:</strong> 9,484</li>
+    <li><strong>Keypoint format:</strong> 17 COCO-style 2D joints per frame</li>
+    <li><strong>Apparatuses:</strong> Floor Exercise (FX), Balance Beam (BB), Uneven Bars (UB), Vault (VT)</li>
+    <li><strong>Pose estimator:</strong> <a href="https://github.com/leoxiaobin/deep-high-resolution-net.pytorch" target="_blank" style="color: #224b8d; text-decoration: none; border-bottom: 1px solid #224b8d;">HRNet</a></li>
+  </ul>
+
+  <h3 style="font-size: 1.3em; margin-top: 1.5em; margin-bottom: 0.8em; color: #224b8d;">Dataset Structure</h3>
+  
+  <p class="framework-text">
+    The dataset is distributed as a single Python dictionary with two top-level keys: <code>split</code> and <code>annotations</code>.
+  </p>
+
+  <p class="framework-text" style="margin-top: 1em;">
+    <strong>Top-Level Keys:</strong>
+  </p>
+  <div style="font-size: 1.15em; line-height: 1.8; margin: 0.5em 3em 1.5em 3em; text-align: left;">
+    <p style="margin: 0.3em 0;">• <code>split</code>: Dictionary containing train/test splits</p>
+    <div style="margin-left: 2em;">
+      <p style="margin: 0.3em 0;">◦ <code>train</code>: List of 28,739 sample IDs (strings)</p>
+      <p style="margin: 0.3em 0;">◦ <code>test</code>: List of 9,484 sample IDs (strings)</p>
+    </div>
+    <p style="margin: 0.3em 0;">• <code>annotations</code>: List of 38,223 dictionaries, each representing one action instance</p>
+  </div>
+
+  <p class="framework-text" style="margin-top: 1.5em;">
+    <strong>Annotation Fields:</strong>
+  </p>
+  
+  <div style="overflow-x: auto; margin: 1em 0;">
+    <table style="width: 95%; margin: 0 auto; border-collapse: collapse; font-size: 1.0em; background-color: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+      <thead>
+        <tr style="background-color: #224b8d; color: white;">
+          <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Key</th>
+          <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Type</th>
+          <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Shape / Example</th>
+          <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background-color: #f9f9f9;">
+          <td style="padding: 10px; border: 1px solid #ddd;">frame_dir</td>
+          <td style="padding: 10px; border: 1px solid #ddd;">str</td>
+          <td style="padding: 10px; border: 1px solid #ddd; font-size: 0.85em;">"A0xAXXysHUo_002184_002237_0035_0036"</td>
+          <td style="padding: 10px; border: 1px solid #ddd;">Unique identifier for the action clip</td>
+        </tr>
+        <tr>
+          <td style="padding: 10px; border: 1px solid #ddd;">label</td>
+          <td style="padding: 10px; border: 1px solid #ddd;">int</td>
+          <td style="padding: 10px; border: 1px solid #ddd;">268</td>
+          <td style="padding: 10px; border: 1px solid #ddd;">Class label (0–287, corresponding to 288 gymnastic elements)</td>
+        </tr>
+        <tr style="background-color: #f9f9f9;">
+          <td style="padding: 10px; border: 1px solid #ddd;">img_shape</td>
+          <td style="padding: 10px; border: 1px solid #ddd;">tuple</td>
+          <td style="padding: 10px; border: 1px solid #ddd;">(720, 1280)</td>
+          <td style="padding: 10px; border: 1px solid #ddd;">Height and width of original video frames</td>
+        </tr>
+        <tr>
+          <td style="padding: 10px; border: 1px solid #ddd;">original_shape</td>
+          <td style="padding: 10px; border: 1px solid #ddd;">tuple</td>
+          <td style="padding: 10px; border: 1px solid #ddd;">(720, 1280)</td>
+          <td style="padding: 10px; border: 1px solid #ddd;">Same as img_shape (for compatibility)</td>
+        </tr>
+        <tr style="background-color: #f9f9f9;">
+          <td style="padding: 10px; border: 1px solid #ddd;">total_frames</td>
+          <td style="padding: 10px; border: 1px solid #ddd;">int</td>
+          <td style="padding: 10px; border: 1px solid #ddd;">48</td>
+          <td style="padding: 10px; border: 1px solid #ddd;">Number of frames in the action sequence</td>
+        </tr>
+        <tr>
+          <td style="padding: 10px; border: 1px solid #ddd;">keypoint</td>
+          <td style="padding: 10px; border: 1px solid #ddd;">np.ndarray (float16)</td>
+          <td style="padding: 10px; border: 1px solid #ddd;">(1, T, 17, 2)</td>
+          <td style="padding: 10px; border: 1px solid #ddd;">2D joint coordinates (x, y) for 17 COCO keypoints over T frames</td>
+        </tr>
+        <tr style="background-color: #f9f9f9;">
+          <td style="padding: 10px; border: 1px solid #ddd;">keypoint_score</td>
+          <td style="padding: 10px; border: 1px solid #ddd;">np.ndarray (float16)</td>
+          <td style="padding: 10px; border: 1px solid #ddd;">(1, T, 17)</td>
+          <td style="padding: 10px; border: 1px solid #ddd;">Confidence scores for each keypoint</td>
+        </tr>
+        <tr>
+          <td style="padding: 10px; border: 1px solid #ddd;">kp_wo_gt</td>
+          <td style="padding: 10px; border: 1px solid #ddd;">np.ndarray (float32)</td>
+          <td style="padding: 10px; border: 1px solid #ddd;">(T, 17, 3)</td>
+          <td style="padding: 10px; border: 1px solid #ddd;">Placeholder array (all zeros); for corrupted/noisy poses</td>
+        </tr>
+        <tr style="background-color: #f9f9f9;">
+          <td style="padding: 10px; border: 1px solid #ddd;">kp_w_gt</td>
+          <td style="padding: 10px; border: 1px solid #ddd;">np.ndarray (float32)</td>
+          <td style="padding: 10px; border: 1px solid #ddd;">(T, 17, 3)</td>
+          <td style="padding: 10px; border: 1px solid #ddd;">Ground-truth 2D poses with confidence as third channel (x, y, score)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="framework-text" style="margin-top: 1em; font-style: italic; color: #666;">
+    <strong>Note:</strong> The first dimension (1) in <code>keypoint</code> and <code>keypoint_score</code> corresponds to the number of persons (always 1 in this dataset).
+  </p>
+
+  <h3 style="font-size: 1.3em; margin-top: 1.5em; margin-bottom: 0.8em; color: #224b8d;">Action Classes</h3>
+  
+  <p class="framework-text">
+    The dataset contains <strong>288 distinct gymnastic elements</strong> across four apparatuses: Floor Exercise (FX), Balance Beam (BB), Uneven Bars (UB), and Vault – Women (VT).
+    Each class represents a highly specific movement (e.g., <em>"Switch leap with 0.5 turn"</em>, <em>"Clear hip circle backward with 1 turn to handstand"</em>), 
+    reflecting the fine-grained nature of competitive gymnastics scoring.
+  </p>
+
+  <p class="framework-text">
+    For the full list of class names and mappings, please refer to the 
+    <a href="https://sdolivia.github.io/FineGym/" target="_blank" style="color: #224b8d; text-decoration: none; border-bottom: 1px solid #224b8d;">FineGym website</a> 
+    and the original <a href="https://openaccess.thecvf.com/content_CVPR_2020/html/Shao_FineGym_A_Hierarchical_Video_Dataset_for_Fine-Grained_Action_Understanding_CVPR_2020_paper.html" target="_blank" style="color: #224b8d; text-decoration: none; border-bottom: 1px solid #224b8d;">CVPR 2020 paper</a>.
+  </p>
+
+  <h3 style="font-size: 1.2em; margin-top: 1.5em; margin-bottom: 0.8em; color: #224b8d;">Usage Example</h3>
+  <div style="background-color: #f5f5f5; padding: 1.5em; margin: 1em 0; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 0.95em; overflow-x: auto;">
+    <pre style="margin: 0;">import pickle
+import numpy as np
+
+# Load the dataset
+with open("gym288_skeleton.pkl", "rb") as f:
+    data = pickle.load(f)
+
+# Access training samples
+train_ids = data["split"]["train"]  # 28,739 samples
+
+# Access annotations
+sample = data["annotations"][0]
+print("Label:", sample["label"])
+print("Frames:", sample["total_frames"])
+print("Keypoints shape:", sample["keypoint"].shape)  # (1, T, 17, 2)
+
+# Extract skeleton sequence
+skeleton_seq = sample["keypoint"][0]  # (T, 17, 2)</pre>
+  </div>
+
+  <h3 style="font-size: 1.2em; margin-top: 1.5em; margin-bottom: 0.8em; color: #224b8d;">Download & License</h3>
+  <p class="framework-text">
+    The dataset is available on <a href="https://huggingface.co/datasets/Lozumi/Gym288-skeleton" target="_blank" style="color: #224b8d; text-decoration: none; border-bottom: 1px solid #224b8d;">Hugging Face</a> 
+    under the <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" style="color: #224b8d; text-decoration: none; border-bottom: 1px solid #224b8d;">CC-BY-4.0</a> license.
+  </p>
+
+  <h3 style="font-size: 1.2em; margin-top: 1.5em; margin-bottom: 0.8em; color: #224b8d;">Acknowledgements</h3>
+  <p class="framework-text">
+    We thank the authors of <a href="https://sdolivia.github.io/FineGym/" target="_blank" style="color: #224b8d; text-decoration: none; border-bottom: 1px solid #224b8d;">FineGym</a> 
+    for their foundational work in fine-grained action recognition. If you use this dataset, please cite both FineTec and the original FineGym paper.
+  </p>
+</div>
+
+<div class="content" id="bibtex">
+  <p class="section-title">Citation</p>
+  <div class="bibtex-box"><pre>@misc{shao2025finetec,
+  title={FineTec: Fine-Grained Action Recognition Under Temporal Corruption via Skeleton Decomposition and Sequence Completion}, 
+  author={Dian Shao and Mingfei Shi and Like Liu},
+  year={2025},
+  eprint={2512.25067},
+  archivePrefix={arXiv},
+  primaryClass={cs.CV},
+  url={https://arxiv.org/abs/2512.25067}
+}</pre></div>
+</div>
+
 <div class="content" id="contact">
   <p class="section-title">Contact</p>
   <p style="text-align: center; font-size: 1.1em; line-height: 2;">
@@ -121,86 +405,6 @@
       mingfeishi5@mail.nwpu.edu.cn
     </a>
   </p>
-</div>
-
-<div class="content" id="citation">
-  <p class="section-title">Citation</p>
-  <p style="text-align: center; color: #666; font-size: 1em;">
-    Citation information will be updated upon publication.
-  </p>
-</div>
-
-<!-- <div class="content">
-  <p style="text-align:center; font-size: 2em; font-weight: bold" class="sansserif">Framework</p> <br>
-  <img src="./finephys/fig2.png" style="width:90%;" alt="architecture_figure" class="summary-img"> <br>
-  <p style="font-size: 1.2em; margin-left:5em; margin-right:5em;" class="serif"> 
-    <strong>Overview of Finephys.</strong>
-    FinePhys addresses the challenging task of generating fine-grained human action videos by explicitly incorporating physical equations exploiting pose modality.
-    The pipeline begins with online extracting 2D poses, then transforms them into 3D using an in-context learning module, achieving the data-driven 3D skeleton sequence $S^{3D}_{dd}$.  
-    To incorporate the physical laws of motion, we introduce a Phys-Net module to re-estimate the 3D positions of each human joint by accounting for second-order temporal variations (<em>i.e.</em>, accelerations) in both forward and reverse directions, yielding physically predicted 3D poses$S^{3D}_{pp}$.
-    Subsequently, $S^{3D}_{dd}$ and $S^{3D}_{pp}$ are fused, projected back into 2D space, encoded into multi-scale latent maps, and integrated into 3D-UNets to guide the denoising process.
-  </p>
-</div> -->
-
-<!-- <div class="content">
-  <p style="text-align:center; font-size: 2em; font-weight: bold" class="sansserif">Visualization Results</p> <br>
-  <p style="font-size: 1.3em" class="serif"> <code>CameraCtrl</code> for general text-to-video generation</p> <br>
-  <div style="text-align:center; margin-bottom:1em;">
-    <video class="clickplay" width="90%" controls>
-      <source src="./CameraCtrl_files/generat_t2v_object.mp4" type="video/mp4">
-    </video>
-  </div>
-  <div style="text-align:center; margin-bottom:1em;">
-    <video class="clickplay" width="90%" controls>
-      <source src="./CameraCtrl_files/general_t2v_scene.mp4" type="video/mp4">
-    </video>
-  </div> <br>
-  <p style="font-size: 1.3em" class="serif"> Same text prompt + Different camera trajectories</p>
-  <div style="text-align:center; margin-bottom:1em;">
-    <video class="clickplay" width="90%" controls>
-      <source src="./CameraCtrl_files/different_traj_same_prompt.mp4" type="video/mp4">
-    </video>
-  </div> <br>
-  <p style="font-size: 1.3em" class="serif"> <code>CameraCtrl</code> for personalized text-to-video generation</p> <br>
-  <div style="text-align:center; margin-bottom:1em;">
-    <video class="clickplay" width="90%" controls>
-      <source src="./CameraCtrl_files/realistic_vision.mp4" type="video/mp4">
-    </video>
-  </div>
-  <div style="text-align:center; margin-bottom:1em;">
-    <video class="clickplay" width="90%" controls>
-      <source src="./CameraCtrl_files/toonyou.mp4" type="video/mp4">
-    </video>
-  </div> <br>
-  <p style="font-size: 1.3em" class="serif"> <code>CameraCtrl</code> for image-to-video generation</p>
-  <div style="text-align:center; margin-bottom:1em;">
-    <video class="clickplay" width="90%" controls>
-      <source src="./CameraCtrl_files/i2v_object.mp4" type="video/mp4">
-    </video>
-  </div>
-  <div style="text-align:center; margin-bottom:1em;">
-    <video class="clickplay" width="90%" controls>
-      <source src="./CameraCtrl_files/i2v_scene.mp4" type="video/mp4">
-    </video>
-  </div> <br>
-  <p style="font-size: 1.3em" class="serif"> Integration <code>CameraCtrl</code> with other video control methods</p> <br>
-  <div style="text-align:center; margin-bottom:1em;">
-    <video class="clickplay" width="96%" controls>
-      <source src="./CameraCtrl_files/integrate_with_others.mp4" type="video/mp4">
-    </video>
-  </div> <br>
-</div>
-
-<div class="content" id="bibtex">
-  <p class="section-title">BibTeX</p>
-  <div class="bibtex-box">
-@inproceedings{shao2026finetec,
-  title={FineTec: Fine-Grained Action Recognition under Temporal Corruption via Skeleton Decomposition and Sequence Completion},
-  author={Shao, Dian and Shi, Mingfei and Liu, Like},
-  booktitle={Proceedings of the AAAI Conference on Artificial Intelligence},
-  year={2026}
-}
-  </div>
 </div>
 
 <!-- Footer -->
@@ -212,6 +416,12 @@
     </p>
   </div>
 </footer>
+
+<!-- Image Modal -->
+<div id="imageModal" class="image-modal">
+  <span class="image-modal-close" onclick="closeImageModal()">&times;</span>
+  <img class="image-modal-content" id="modalImage">
+</div>
 
 </body>
 </html>
