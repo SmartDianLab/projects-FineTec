@@ -431,4 +431,19 @@ p code {
   .section-title {
     font-size: 1.5em;
   }
+  
+  /* Abstract section - stack poster and text vertically on mobile */
+  #abstract > div {
+    flex-direction: column !important;
+  }
+  
+  #abstract > div > div {
+    flex: none !important;
+    width: 100% !important;
+    max-width: none !important;
+  }
+  
+  #abstract .abstract-text {
+    margin-top: 1.5em !important;
+  }
 }
