@@ -443,6 +443,11 @@ p code {
     max-width: none !important;
   }
   
+  #abstract > div > div:first-child {
+    max-width: 400px !important;
+    margin: 0 auto !important;
+  }
+  
   #abstract .abstract-text {
     margin-top: 1.5em !important;
   }

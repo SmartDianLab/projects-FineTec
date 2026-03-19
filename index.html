@@ -121,7 +121,7 @@
     </p>
   
     <p style="text-align: center; margin-top: 25px;">
-      <a href="#" class="link-button" onclick="alert('PDF coming soon'); return false;">📄 Paper <span style="font-size: 0.85em;">(Coming soon)</span></a>
+      <a href="https://ojs.aaai.org/index.php/AAAI/article/view/37838" target="_blank" class="link-button">📄 AAAI Paper</a>
       <a href="https://arxiv.org/abs/2512.25067" target="_blank" class="link-button">📝 arXiv</a>
       <a href="https://github.com/SmartDianLab/FineTec" target="_blank" class="link-button">💻 Code</a>
       <a href="https://huggingface.co/datasets/Lozumi/Gym288-skeleton" target="_blank" class="link-button">💾 Dataset</a>
@@ -177,7 +177,7 @@
     <strong>②</strong> Skeleton-based Spatial Decomposition partitions $S_{base}$ into anatomical regions by motion intensity, generating dynamic ($S_{dyna}$) and static ($S_{stat}$) variants, which are fused into $S_{pred}$; 
     <strong>③</strong> Physics-driven Acceleration Modeling infers joint accelerations via Lagrangian dynamics and data-driven finite differences, producing fused temporal dynamics features $\mathbf{a}$. 
     The resulting positional ($S_{pred}$) and dynamic ($\mathbf{a}_{pred}$) features are used for downstream fine-grained action recognition.
-    For more details, please refer to our <a href="https://arxiv.org/abs/2512.25067" target="_blank" style="color: #224b8d; text-decoration: none; border-bottom: 1px solid #224b8d;">paper</a>.
+    For more details, please refer to our <a href="https://ojs.aaai.org/index.php/AAAI/article/view/37838" target="_blank" style="color: #224b8d; text-decoration: none; border-bottom: 1px solid #224b8d;">paper</a>.
   </p>
 </div>
 
@@ -193,7 +193,7 @@
     Notably, in the most challenging scenario—Gym288-skeleton with severe frame missing—FineTec attains a Top-1 accuracy of <strong>78.1%</strong>, surpassing all previous skeleton-based methods. 
     In terms of mean class accuracy, FineTec improves upon the best baseline by <strong>13%</strong>, and outperforms the latest work by <strong>50%</strong>. 
     Overall, these results demonstrate that FineTec achieves outstanding effectiveness across fine-grained datasets and under all levels of difficulty.
-    For additional results and ablation studies, please refer to our <a href="https://arxiv.org/abs/2512.25067" target="_blank" style="color: #224b8d; text-decoration: none; border-bottom: 1px solid #224b8d;">paper</a>.
+    For additional results and ablation studies, please refer to our <a href="https://ojs.aaai.org/index.php/AAAI/article/view/37838" target="_blank" style="color: #224b8d; text-decoration: none; border-bottom: 1px solid #224b8d;">paper</a>.
   </p>
 </div>
 
@@ -389,14 +389,17 @@ skeleton_seq = sample["keypoint"][0]  # (T, 17, 2)</pre>
 
 <div class="content" id="bibtex">
   <p class="section-title">Citation</p>
-  <div class="bibtex-box"><pre>@misc{shao2025finetec,
-  title={FineTec: Fine-Grained Action Recognition Under Temporal Corruption via Skeleton Decomposition and Sequence Completion}, 
-  author={Dian Shao and Mingfei Shi and Like Liu},
-  year={2025},
-  eprint={2512.25067},
-  archivePrefix={arXiv},
-  primaryClass={cs.CV},
-  url={https://arxiv.org/abs/2512.25067}
+  <div class="bibtex-box"><pre>@article{Shao_Shi_Liu_2026,
+  title={FineTec: Fine-Grained Action Recognition Under Temporal Corruption via Skeleton Decomposition and Sequence Completion},
+  volume={40},
+  url={https://ojs.aaai.org/index.php/AAAI/article/view/37838},
+  DOI={10.1609/aaai.v40i11.37838},
+  number={11},
+  journal={Proceedings of the AAAI Conference on Artificial Intelligence},
+  author={Shao, Dian and Shi, Mingfei and Liu, Like},
+  year={2026},
+  month={Mar.},
+  pages={8842-8850}
 }</pre></div>
 </div>
 
