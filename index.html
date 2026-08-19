@@ -122,7 +122,7 @@
       <a href="https://ojs.aaai.org/index.php/AAAI/article/view/37838" target="_blank" class="link-button">📄 AAAI Paper</a>
       <a href="https://arxiv.org/abs/2512.25067" target="_blank" class="link-button">📝 arXiv</a>
       <a href="https://github.com/SmartDianLab/FineTec" target="_blank" class="link-button">💻 Code</a>
-      <a href="https://huggingface.co/datasets/Lozumi/Gym288-skeleton" target="_blank" class="link-button">💾 Dataset</a>
+      <a href="https://huggingface.co/datasets/Lozumi/FineGym-skeleton" target="_blank" class="link-button">💾 Dataset</a>
       <a href="#bibtex" class="link-button">📋 BibTeX</a>
     </p>
     <p style="text-align: center; margin-top: 10px; font-size: 0.9em; color: #666;">
@@ -212,9 +212,9 @@
   <h3 style="font-size: 1.3em; margin-top: 1.5em; margin-bottom: 0.8em; color: #224b8d;">Overview</h3>
   
   <p class="framework-text">
-    The <strong>Gym288-skeleton</strong> dataset is a human skeleton-based action recognition benchmark derived from the <strong>Gym288</strong> subset of the 
+    <strong>FineGym-skeleton-V2</strong> is a human skeleton-based action recognition benchmark derived from the <strong>Gym99</strong> and <strong>Gym288</strong> subsets of the 
     <a href="https://sdolivia.github.io/FineGym/" target="_blank" style="color: #224b8d; text-decoration: none; border-bottom: 1px solid #224b8d;">FineGym</a> dataset. 
-    It provides temporally precise, fine-grained annotations of gymnastic actions along with 2D human pose sequences extracted from original video frames.
+    It provides temporally precise, fine-grained annotations of gymnastic actions together with 2D human pose sequences extracted from RGB subaction clips. The V2 release contains <strong>Gym99-skeleton-V2</strong> and <strong>Gym288-skeleton-V2</strong>.
   </p>
 
   <p class="framework-text">
@@ -228,32 +228,51 @@
   </ul>
 
   <h3 style="font-size: 1.3em; margin-top: 1.5em; margin-bottom: 0.8em; color: #224b8d;">Key Statistics</h3>
-  <ul style="font-size: 1.15em; line-height: 1.8; margin: 1em 3em; text-align: left;">
-    <li><strong>Total instances:</strong> 38,223 action sequences</li>
-    <li><strong>Action classes:</strong> 288 fine-grained gymnastic elements</li>
-    <li><strong>Training samples:</strong> 28,739</li>
-    <li><strong>Test samples:</strong> 9,484</li>
-    <li><strong>Keypoint format:</strong> 17 COCO-style 2D joints per frame</li>
-    <li><strong>Apparatuses:</strong> Floor Exercise (FX), Balance Beam (BB), Uneven Bars (UB), Vault (VT)</li>
-    <li><strong>Pose estimator:</strong> <a href="https://github.com/leoxiaobin/deep-high-resolution-net.pytorch" target="_blank" style="color: #224b8d; text-decoration: none; border-bottom: 1px solid #224b8d;">HRNet</a></li>
-  </ul>
+  <div style="overflow-x: auto; margin: 1em 0;">
+    <table style="width: 95%; margin: 0 auto; border-collapse: collapse; font-size: 1.0em; background-color: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+      <thead>
+        <tr style="background-color: #224b8d; color: white;">
+          <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Item</th>
+          <th style="padding: 12px; text-align: center; border: 1px solid #ddd;">Gym99-skeleton-V2</th>
+          <th style="padding: 12px; text-align: center; border: 1px solid #ddd;">Gym288-skeleton-V2</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background-color: #f9f9f9;"><td style="padding: 10px; border: 1px solid #ddd;">Action classes</td><td style="padding: 10px; text-align: center; border: 1px solid #ddd;">99</td><td style="padding: 10px; text-align: center; border: 1px solid #ddd;">288</td></tr>
+        <tr><td style="padding: 10px; border: 1px solid #ddd;">Total instances</td><td style="padding: 10px; text-align: center; border: 1px solid #ddd;">34,803</td><td style="padding: 10px; text-align: center; border: 1px solid #ddd;">38,935</td></tr>
+        <tr style="background-color: #f9f9f9;"><td style="padding: 10px; border: 1px solid #ddd;">Training samples</td><td style="padding: 10px; text-align: center; border: 1px solid #ddd;">26,282</td><td style="padding: 10px; text-align: center; border: 1px solid #ddd;">29,290</td></tr>
+        <tr><td style="padding: 10px; border: 1px solid #ddd;">Validation samples</td><td style="padding: 10px; text-align: center; border: 1px solid #ddd;">8,521</td><td style="padding: 10px; text-align: center; border: 1px solid #ddd;">9,645</td></tr>
+        <tr style="background-color: #f9f9f9;"><td style="padding: 10px; border: 1px solid #ddd;">Total annotated frames</td><td style="padding: 10px; text-align: center; border: 1px solid #ddd;">1,617,291</td><td style="padding: 10px; text-align: center; border: 1px solid #ddd;">1,882,226</td></tr>
+        <tr><td style="padding: 10px; border: 1px solid #ddd;">Frames per sample (min / mean / max)</td><td style="padding: 10px; text-align: center; border: 1px solid #ddd;">2 / 46.47 / 725</td><td style="padding: 10px; text-align: center; border: 1px solid #ddd;">2 / 48.34 / 725</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="framework-text">
+    Each sample contains one tracked gymnast represented by <strong>17 COCO-style 2D keypoints per frame</strong>. The action classes cover Floor Exercise (FX), Balance Beam (BB), Uneven Bars (UB), and Vault – Women (VT).
+  </p>
+
+  <h3 style="font-size: 1.3em; margin-top: 1.5em; margin-bottom: 0.8em; color: #224b8d;">Annotation Pipeline</h3>
+  <p class="framework-text">
+    For each RGB subaction clip, a bounding box was manually annotated on the first frame to identify the target gymnast. <a href="https://github.com/botaoye/OSTrack" target="_blank" style="color: #224b8d; text-decoration: none; border-bottom: 1px solid #224b8d;">OSTrack</a> was then used to track the target throughout the clip, followed by <a href="https://github.com/leoxiaobin/deep-high-resolution-net.pytorch" target="_blank" style="color: #224b8d; text-decoration: none; border-bottom: 1px solid #224b8d;">HRNet</a> for frame-by-frame skeleton keypoint extraction.
+  </p>
 
   <h3 style="font-size: 1.3em; margin-top: 1.5em; margin-bottom: 0.8em; color: #224b8d;">Dataset Structure</h3>
   
   <p class="framework-text">
-    The dataset is distributed as a single Python dictionary with two top-level keys: <code>split</code> and <code>annotations</code>.
+    Each skeleton V2 subset is distributed as a Python dictionary with two top-level keys: <code>split</code> and <code>annotations</code>.
   </p>
 
   <p class="framework-text" style="margin-top: 1em;">
     <strong>Top-Level Keys:</strong>
   </p>
   <div style="font-size: 1.15em; line-height: 1.8; margin: 0.5em 3em 1.5em 3em; text-align: left;">
-    <p style="margin: 0.3em 0;">• <code>split</code>: Dictionary containing train/test splits</p>
+    <p style="margin: 0.3em 0;">• <code>split</code>: Dictionary containing <code>train</code> and <code>val</code> sample-ID lists</p>
     <div style="margin-left: 2em;">
-      <p style="margin: 0.3em 0;">◦ <code>train</code>: List of 28,739 sample IDs (strings)</p>
-      <p style="margin: 0.3em 0;">◦ <code>test</code>: List of 9,484 sample IDs (strings)</p>
+      <p style="margin: 0.3em 0;">◦ Gym99: 26,282 training IDs and 8,521 validation IDs</p>
+      <p style="margin: 0.3em 0;">◦ Gym288: 29,290 training IDs and 9,645 validation IDs</p>
     </div>
-    <p style="margin: 0.3em 0;">• <code>annotations</code>: List of 38,223 dictionaries, each representing one action instance</p>
+    <p style="margin: 0.3em 0;">• <code>annotations</code>: One annotation dictionary per action instance</p>
   </div>
 
   <p class="framework-text" style="margin-top: 1.5em;">
@@ -280,8 +299,8 @@
         <tr>
           <td style="padding: 10px; border: 1px solid #ddd;">label</td>
           <td style="padding: 10px; border: 1px solid #ddd;">int</td>
-          <td style="padding: 10px; border: 1px solid #ddd;">268</td>
-          <td style="padding: 10px; border: 1px solid #ddd;">Class label (0–287, corresponding to 288 gymnastic elements)</td>
+          <td style="padding: 10px; border: 1px solid #ddd;">93</td>
+          <td style="padding: 10px; border: 1px solid #ddd;">Zero-based class label (0–98 for Gym99 or 0–287 for Gym288)</td>
         </tr>
         <tr style="background-color: #f9f9f9;">
           <td style="padding: 10px; border: 1px solid #ddd;">img_shape</td>
@@ -313,18 +332,6 @@
           <td style="padding: 10px; border: 1px solid #ddd;">(1, T, 17)</td>
           <td style="padding: 10px; border: 1px solid #ddd;">Confidence scores for each keypoint</td>
         </tr>
-        <tr>
-          <td style="padding: 10px; border: 1px solid #ddd;">kp_wo_gt</td>
-          <td style="padding: 10px; border: 1px solid #ddd;">np.ndarray (float32)</td>
-          <td style="padding: 10px; border: 1px solid #ddd;">(T, 17, 3)</td>
-          <td style="padding: 10px; border: 1px solid #ddd;">Placeholder array (all zeros); for corrupted/noisy poses</td>
-        </tr>
-        <tr style="background-color: #f9f9f9;">
-          <td style="padding: 10px; border: 1px solid #ddd;">kp_w_gt</td>
-          <td style="padding: 10px; border: 1px solid #ddd;">np.ndarray (float32)</td>
-          <td style="padding: 10px; border: 1px solid #ddd;">(T, 17, 3)</td>
-          <td style="padding: 10px; border: 1px solid #ddd;">Ground-truth 2D poses with confidence as third channel (x, y, score)</td>
-        </tr>
       </tbody>
     </table>
   </div>
@@ -336,7 +343,7 @@
   <h3 style="font-size: 1.3em; margin-top: 1.5em; margin-bottom: 0.8em; color: #224b8d;">Action Classes</h3>
   
   <p class="framework-text">
-    The dataset contains <strong>288 distinct gymnastic elements</strong> across four apparatuses: Floor Exercise (FX), Balance Beam (BB), Uneven Bars (UB), and Vault – Women (VT).
+    Gym99-skeleton-V2 contains <strong>99 classes</strong>, while Gym288-skeleton-V2 contains <strong>288 classes</strong>. Both subsets cover four apparatuses: Floor Exercise (FX), Balance Beam (BB), Uneven Bars (UB), and Vault – Women (VT).
     Each class represents a highly specific movement (e.g., <em>"Switch leap with 0.5 turn"</em>, <em>"Clear hip circle backward with 1 turn to handstand"</em>), 
     reflecting the fine-grained nature of competitive gymnastics scoring.
   </p>
@@ -350,14 +357,14 @@
   <h3 style="font-size: 1.2em; margin-top: 1.5em; margin-bottom: 0.8em; color: #224b8d;">Usage Example</h3>
   <div style="background-color: #f5f5f5; padding: 1.5em; margin: 1em 0; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 0.95em; overflow-x: auto;">
     <pre style="margin: 0;">import pickle
-import numpy as np
 
 # Load the dataset
-with open("gym288_skeleton.pkl", "rb") as f:
+with open("Gym288-skeleton-V2.pkl", "rb") as f:
     data = pickle.load(f)
 
 # Access training samples
-train_ids = data["split"]["train"]  # 28,739 samples
+train_ids = data["split"]["train"]  # 29,290 samples
+val_ids = data["split"]["val"]      # 9,645 samples
 
 # Access annotations
 sample = data["annotations"][0]
@@ -369,16 +376,42 @@ print("Keypoints shape:", sample["keypoint"].shape)  # (1, T, 17, 2)
 skeleton_seq = sample["keypoint"][0]  # (T, 17, 2)</pre>
   </div>
 
+  <h3 style="font-size: 1.3em; margin-top: 1.5em; margin-bottom: 0.8em; color: #224b8d;">FineGym-RGB-subactions</h3>
+  <p class="framework-text">
+    The <a href="https://huggingface.co/datasets/Lozumi/FineGym-skeleton/tree/main/FineGym-RGB-subactions" target="_blank" style="color: #224b8d; text-decoration: none; border-bottom: 1px solid #224b8d;"><strong>FineGym-RGB-subactions</strong></a> release contains <strong>39,092 MP4 clips</strong>, organized into four parts with a total size of approximately <strong>8.39 GB</strong>.
+  </p>
+  <div style="overflow-x: auto; margin: 1em 0;">
+    <table style="width: 70%; margin: 0 auto; border-collapse: collapse; font-size: 1.0em; background-color: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+      <thead>
+        <tr style="background-color: #224b8d; color: white;">
+          <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Directory</th>
+          <th style="padding: 12px; text-align: center; border: 1px solid #ddd;">MP4 files</th>
+          <th style="padding: 12px; text-align: center; border: 1px solid #ddd;">Size</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background-color: #f9f9f9;"><td style="padding: 10px; border: 1px solid #ddd;">part1</td><td style="padding: 10px; text-align: center; border: 1px solid #ddd;">10,000</td><td style="padding: 10px; text-align: center; border: 1px solid #ddd;">2.04 GB</td></tr>
+        <tr><td style="padding: 10px; border: 1px solid #ddd;">part2</td><td style="padding: 10px; text-align: center; border: 1px solid #ddd;">10,000</td><td style="padding: 10px; text-align: center; border: 1px solid #ddd;">2.20 GB</td></tr>
+        <tr style="background-color: #f9f9f9;"><td style="padding: 10px; border: 1px solid #ddd;">part3</td><td style="padding: 10px; text-align: center; border: 1px solid #ddd;">10,000</td><td style="padding: 10px; text-align: center; border: 1px solid #ddd;">2.19 GB</td></tr>
+        <tr><td style="padding: 10px; border: 1px solid #ddd;">part4</td><td style="padding: 10px; text-align: center; border: 1px solid #ddd;">9,092</td><td style="padding: 10px; text-align: center; border: 1px solid #ddd;">1.95 GB</td></tr>
+        <tr style="background-color: #eef3fa; font-weight: bold;"><td style="padding: 10px; border: 1px solid #ddd;">Total</td><td style="padding: 10px; text-align: center; border: 1px solid #ddd;">39,092</td><td style="padding: 10px; text-align: center; border: 1px solid #ddd;">8.39 GB</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="framework-text">
+    An example filename is <code>0LtLS9wROrk_E_000147_000152_A_0000_0005.mp4</code>, which preserves the source-video ID and the zero-padded temporal identifiers used by the FineGym event/action annotations.
+  </p>
+
   <h3 style="font-size: 1.2em; margin-top: 1.5em; margin-bottom: 0.8em; color: #224b8d;">Download & License</h3>
   <p class="framework-text">
-    The dataset is available on <a href="https://huggingface.co/datasets/Lozumi/Gym288-skeleton" target="_blank" style="color: #224b8d; text-decoration: none; border-bottom: 1px solid #224b8d;">Hugging Face</a> 
+    The skeleton annotations and RGB subaction clips are available on <a href="https://huggingface.co/datasets/Lozumi/FineGym-skeleton" target="_blank" style="color: #224b8d; text-decoration: none; border-bottom: 1px solid #224b8d;">Hugging Face</a> 
     under the <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" style="color: #224b8d; text-decoration: none; border-bottom: 1px solid #224b8d;">CC-BY-4.0</a> license.
   </p>
 
   <h3 style="font-size: 1.2em; margin-top: 1.5em; margin-bottom: 0.8em; color: #224b8d;">Acknowledgements</h3>
   <p class="framework-text">
     We thank the authors of <a href="https://sdolivia.github.io/FineGym/" target="_blank" style="color: #224b8d; text-decoration: none; border-bottom: 1px solid #224b8d;">FineGym</a> 
-    for their foundational work in fine-grained action recognition. If you use this dataset, please cite both FineTec and the original FineGym paper.
+    for their foundational work in fine-grained action recognition. Target gymnasts were tracked with <a href="https://github.com/botaoye/OSTrack" target="_blank" style="color: #224b8d; text-decoration: none; border-bottom: 1px solid #224b8d;">OSTrack</a>, and skeleton keypoints were extracted with <a href="https://github.com/leoxiaobin/deep-high-resolution-net.pytorch" target="_blank" style="color: #224b8d; text-decoration: none; border-bottom: 1px solid #224b8d;">HRNet</a>. If you use this dataset, please cite both FineTec and the original FineGym paper.
   </p>
 </div>
 
