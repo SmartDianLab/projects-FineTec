@@ -182,7 +182,7 @@
     <img src="./assets/tab1_results_on_finegym.png" style="width: 90%; max-width: 1200px;" alt="FineTec Results">
   </div>
   <p class="framework-text">
-    The main quantitative results on the two fine-grained skeleton datasets, Gym99 and Gym288-skeleton, are presented in the table above.
+    The main quantitative results on the two fine-grained skeleton datasets, Gym99-skeleton and Gym288-skeleton, are presented in the table above.
     These results are reported across three difficulty levels: minor (25% frame missing), moderate (50% frame missing), and severe (75% frame missing). 
     It can be observed that the proposed FineTec framework consistently achieves the best performance under all conditions. 
     Notably, in the most challenging scenario—Gym288-skeleton with severe frame missing—FineTec attains a Top-1 accuracy of <strong>78.1%</strong>, surpassing all previous skeleton-based methods. 
@@ -206,13 +206,13 @@
   <p class="section-title">Dataset</p>
   
   <div style="text-align: center; margin: 2em 0;">
-    <img src="./assets/gym288_gym288_visualization.png" style="width: 90%; max-width: 1200px;" alt="Gym288 Dataset Visualization">
+    <img src="./assets/gym288_gym288_visualization.png" style="width: 90%; max-width: 1200px;" alt="Gym288-skeleton (V1) Dataset Visualization ">
   </div>
   
   <h3 style="font-size: 1.3em; margin-top: 1.5em; margin-bottom: 0.8em; color: #224b8d;">Overview</h3>
   
   <p class="framework-text">
-    <strong>FineGym-skeleton-V2</strong> is a human skeleton-based action recognition benchmark derived from the <strong>Gym99</strong> and <strong>Gym288</strong> subsets of the 
+    <strong>FineGym-skeleton</strong> is a human skeleton-based action recognition benchmark derived from the <strong>Gym99</strong> and <strong>Gym288</strong> subsets of the 
     <a href="https://sdolivia.github.io/FineGym/" target="_blank" style="color: #224b8d; text-decoration: none; border-bottom: 1px solid #224b8d;">FineGym</a> dataset. 
     It provides temporally precise, fine-grained annotations of gymnastic actions together with 2D human pose sequences extracted from RGB subaction clips. The V2 release contains <strong>Gym99-skeleton-V2</strong> and <strong>Gym288-skeleton-V2</strong>.
   </p>
@@ -233,8 +233,8 @@
       <thead>
         <tr style="background-color: #224b8d; color: white;">
           <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Item</th>
-          <th style="padding: 12px; text-align: center; border: 1px solid #ddd;">Gym99-skeleton-V2</th>
-          <th style="padding: 12px; text-align: center; border: 1px solid #ddd;">Gym288-skeleton-V2</th>
+          <th style="padding: 12px; text-align: center; border: 1px solid #ddd;">Gym99-skeleton</th>
+          <th style="padding: 12px; text-align: center; border: 1px solid #ddd;">Gym288-skeleton</th>
         </tr>
       </thead>
       <tbody>
@@ -260,7 +260,7 @@
   <h3 style="font-size: 1.3em; margin-top: 1.5em; margin-bottom: 0.8em; color: #224b8d;">Dataset Structure</h3>
   
   <p class="framework-text">
-    Each skeleton V2 subset is distributed as a Python dictionary with two top-level keys: <code>split</code> and <code>annotations</code>.
+    Each skeleton subset is distributed as a Python dictionary with two top-level keys: <code>split</code> and <code>annotations</code>.
   </p>
 
   <p class="framework-text" style="margin-top: 1em;">
@@ -269,8 +269,8 @@
   <div style="font-size: 1.15em; line-height: 1.8; margin: 0.5em 3em 1.5em 3em; text-align: left;">
     <p style="margin: 0.3em 0;">• <code>split</code>: Dictionary containing <code>train</code> and <code>val</code> sample-ID lists</p>
     <div style="margin-left: 2em;">
-      <p style="margin: 0.3em 0;">◦ Gym99: 26,282 training IDs and 8,521 validation IDs</p>
-      <p style="margin: 0.3em 0;">◦ Gym288: 29,290 training IDs and 9,645 validation IDs</p>
+      <p style="margin: 0.3em 0;">◦ Gym99-skeleton: 26,282 training IDs and 8,521 validation IDs</p>
+      <p style="margin: 0.3em 0;">◦ Gym288-skeleton: 29,290 training IDs and 9,645 validation IDs</p>
     </div>
     <p style="margin: 0.3em 0;">• <code>annotations</code>: One annotation dictionary per action instance</p>
   </div>
@@ -330,7 +330,7 @@
           <td style="padding: 10px; border: 1px solid #ddd;">keypoint_score</td>
           <td style="padding: 10px; border: 1px solid #ddd;">np.ndarray (float16)</td>
           <td style="padding: 10px; border: 1px solid #ddd;">(1, T, 17)</td>
-          <td style="padding: 10px; border: 1px solid #ddd;">Confidence scores for each keypoint</td>
+          <td style="padding: 10px; border: 1px solid #ddd;">Per-keypoint pose-estimation scores</td>
         </tr>
       </tbody>
     </table>
@@ -343,7 +343,7 @@
   <h3 style="font-size: 1.3em; margin-top: 1.5em; margin-bottom: 0.8em; color: #224b8d;">Action Classes</h3>
   
   <p class="framework-text">
-    Gym99-skeleton-V2 contains <strong>99 classes</strong>, while Gym288-skeleton-V2 contains <strong>288 classes</strong>. Both subsets cover four apparatuses: Floor Exercise (FX), Balance Beam (BB), Uneven Bars (UB), and Vault – Women (VT).
+    Gym99-skeleton contains <strong>99 classes</strong>, while Gym288-skeleton contains <strong>288 classes</strong>. Both subsets cover four apparatuses: Floor Exercise (FX), Balance Beam (BB), Uneven Bars (UB), and Vault – Women (VT).
     Each class represents a highly specific movement (e.g., <em>"Switch leap with 0.5 turn"</em>, <em>"Clear hip circle backward with 1 turn to handstand"</em>), 
     reflecting the fine-grained nature of competitive gymnastics scoring.
   </p>
